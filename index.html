@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Jeu de la Vie de Conway - Art Génératif NFT</title>
+    <meta name="description" content="Découvrez des œuvres d'art numériques uniques générées par les règles du Jeu de la Vie de Conway, transformées en NFT collectionnables.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader">
+        <div class="loader-content">
+            <div class="loader-grid">
+                <div class="loader-cell"></div>
+                <div class="loader-cell"></div>
+                <div class="loader-cell"></div>
+                <div class="loader-cell"></div>
+                <div class="loader-cell"></div>
+                <div class="loader-cell"></div>
+                <div class="loader-cell"></div>
+                <div class="loader-cell"></div>
+                <div class="loader-cell"></div>
+            </div>
+            <div class="loader-text">GÉNÉRATION EN COURS...</div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">Vie<span>Numérique</span></a>
+            <nav>
+                <ul>
+                    <li><a href="#about">À propos</a></li>
+                    <li><a href="#gallery">Galerie</a></li>
+                    <li><a href="#concept">Concept</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="cell-grid" id="cellAnimation"></div>
+        <div class="container">
+            <div class="hero-content fade-in">
+                <h1>Le Jeu de la Vie de Conway</h1>
+                <p>Exploration artistique de la complexité émergente à partir de règles simples. Des motifs cellulaires évoluent dans le temps pour former des structures complexes et changeantes, capturées sous forme d'art numérique unique.</p>
+                <div>
+                    <a href="#gallery" class="btn">Découvrir les œuvres</a>
+                    <a href="#about" class="btn btn-outline">En savoir plus</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>À propos du projet</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text fade-in">
+                    <h3>L'art de l'émergence</h3>
+                    <p>Le Jeu de la Vie de Conway n'est pas un jeu au sens traditionnel, mais un automate cellulaire fascinant inventé par le mathématicien britannique John Horton Conway en 1970. À partir de règles simples, des comportements complexes et imprévisibles émergent, créant une métaphore saisissante de la vie elle-même.</p>
+                    <p>Ce projet artistique explore la beauté de cette complexité émergente. Chaque œuvre est générée par un processus aléatoire initial, puis évolue selon les règles strictes du Jeu de la Vie, créant des motifs uniques et fascinants qui ne se répéteront jamais.</p>
+                    <p>L'aspect le plus remarquable est que l'artiste n'intervient que dans la configuration initiale et les paramètres visuels - le reste est entièrement déterminé par les mathématiques et l'évolution naturelle du système.</p>
+                </div>
+                <div class="about-image fade-in">
+                    <img src="preview.gif" alt="Animation du Jeu de la Vie de Conway">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="concept" class="section features">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Concept artistique</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Automate cellulaire</h3>
+                    <p>Basé sur les règles originales du Jeu de la Vie de Conway : une cellule naît si elle a exactement 3 voisines vivantes, survit avec 2 ou 3 voisines, et meurt dans tous les autres cas.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>Esthétique visuelle</h3>
+                    <p>Chaque œuvre présente une esthétique unique avec des effets visuels organiques, des couleurs basées sur l'âge des cellules, et des animations subtiles qui évoquent des systèmes biologiques.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-fingerprint"></i>
+                    </div>
+                    <h3>Unicité garantie</h3>
+                    <p>Chaque NFT représente un état unique du Jeu de la Vie, avec sa propre configuration initiale, évolution et rendu visuel, garantissant une œuvre véritablement unique.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3>Héritage mathématique</h3>
+                    <p>Ce projet s'inscrit dans l'héritage du travail pionnier de John Conway, démontrant comment des règles simples peuvent produire des comportements complexes et imprévisibles.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="section gallery">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Galerie d'œuvres</h2>
+            </div>
+            <div class="gallery-grid">
+                <a href="nft-detail.html" class="gallery-item fade-in">
+                    <img src="preview.gif" alt="Évolution de la Vie Numérique">
+                    <div class="gallery-overlay">
+                        <h3>Évolution de la Vie Numérique</h3>
+                        <p>Génération #1106</p>
+                        <span class="btn">Voir les détails</span>
+                    </div>
+                </a>
+                <!-- Les autres œuvres seront ajoutées dynamiquement -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Contact</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text fade-in">
+                    <h3>Intéressé par ce projet ?</h3>
+                    <p>Si vous souhaitez en savoir plus sur ce projet artistique, acquérir une œuvre ou discuter d'une collaboration potentielle, n'hésitez pas à me contacter.</p>
+                    <p>Vous pouvez également me suivre sur les plateformes NFT comme OpenSea et Rarible pour être informé des nouvelles créations et des ventes à venir.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-medium"></i></a>
+                    </div>
+                </div>
+                <div class="about-image fade-in">
+                    <img src="preview.gif" alt="Animation du Jeu de la Vie de Conway">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Vie<span>Numérique</span></h3>
+                    <p>Exploration artistique de la complexité émergente à travers le Jeu de la Vie de Conway, transformée en NFT uniques et collectionnables.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Liens rapides</h3>
+                    <ul>
+                        <li><a href="#about">À propos</a></li>
+                        <li><a href="#gallery">Galerie</a></li>
+                        <li><a href="#concept">Concept</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Plateformes NFT</h3>
+                    <ul>
+                        <li><a href="https://opensea.io/" target="_blank">OpenSea</a></li>
+                        <li><a href="https://rarible.com/" target="_blank">Rarible</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 VieNumérique. Tous droits réservés. Créé par Manus AI.
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

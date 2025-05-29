@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Visualiseur du Jeu de la Vie</title>
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: 'Courier New', monospace;
+      color: #eee;
+    }
+    canvas {
+      margin-top: 60px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      background: #000;
+    }
+    .controls {
+      position: fixed;
+      top: 10px;
+      z-index: 10;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      background: rgba(255,255,255,0.9);
+      padding: 8px;
+      border-radius: 8px;
+      direction: ltr;
+    }
+    .controls button {
+      background: #000;
+      color: #fff;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: .2s;
+    }
+    .controls button:hover {
+      background: #333;
+    }
+    .info-panel {
+      margin: 20px auto;
+      padding: 15px;
+      max-width: 800px;
+      background: #222;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+      direction: ltr;
+    }
+    .info-panel div {
+      margin: 4px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="controls">
+    <button id="start-stop">▶️ Démarrer/Arrêter</button>
+    <button id="reset">↺ Réinitialiser</button>
+  </div>
+
+  <canvas id="canvas"></canvas>
+
+  <div class="info-panel">
+    <h3>Statistiques de la simulation</h3>
+    <div id="generation-info">Génération actuelle: 0</div>
+    <div id="cell-stats">Cellules vivantes: 0 | Densité: 0%</div>
+  </div>
+
+  <script>
+    // Configuration des variables de base
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    const startStopBtn = document.getElementById('start-stop');
+    const resetBtn = document.getElementById('reset');
+    const genInfo = document.getElementById('generation-info');
+    const cellStats = document.getElementById('cell-stats');
+    
+    // Configuration de la grille et des mesures
+    const gridSize = 35;
+    const cellSize = 6;
+    const canvasScale = 1;
+    canvas.width = gridSize * cellSize;
+    canvas.height = gridSize * cellSize;
+    canvas.style.width = gridSize * cellSize + 'px';
+    canvas.style.height = gridSize * cellSize + 'px';
+
+    // Variables d'état
+    let grid, nextGrid, ageGrid;
+    let fps = 50;
+    let activeProb = 0.2;
+    let running = false;
+    let frame = 0;
+    let generation = 0;
+    
+    // Grille initiale provenant de la simulation originale
+    const initialGrid = [[false,false,true,true,false,true,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,true,true,false,false],[false,false,false,true,false,false,false,false,false,false,false,false,true,false,false,false,false,false,true,true,false,false,false,false,false,false,false,true,false,false,false,false,false,true,false],[false,false,true,false,false,true,false,false,false,false,true,false,true,false,true,false,false,false,true,false,false,false,false,true,false,true,true,false,false,false,false,false,false,false,false],[false,false,true,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,true,false,false],[true,true,false,false,false,true,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,true,false,false,false,false],[false,false,false,true,true,false,false,false,true,false,false,false,true,true,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,true,false],[false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true],[true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,true,false,true,false,false,false,false,true,true,false,false,false,true,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,true,false,true,true,false,false,true,false,false,false,false,false,false,false,false,false],[false,true,true,false,false,false,false,false,false,false,false,true,false,true,true,false,false,false,false,false,true,false,false,false,true,true,false,false,false,false,false,false,true,false,false],[true,true,false,false,false,true,false,false,true,true,true,true,false,true,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,true,false,true,false,false,false],[true,true,false,false,true,true,true,false,true,true,false,false,true,false,false,true,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,true,false,false,false,false,true,false,true,false,false,false,false,true,false,false,true,false,false,false,false,true,false,false,false,false,false,true,true,false],[false,false,true,false,false,true,false,true,false,false,false,false,true,false,false,false,false,false,false,true,false,false,true,false,false,true,false,false,false,false,false,true,false,false,false],[false,true,false,true,true,false,false,false,false,false,false,true,false,true,true,true,false,false,false,false,false,false,false,false,false,true,false,false,true,false,false,false,false,false,false],[false,false,false,true,false,false,false,false,true,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,true,true,false,false,false,false,false],[false,true,true,false,true,true,false,false,true,false,false,false,false,false,false,false,false,false,false,false,true,false,true,false,true,false,false,false,false,false,false,false,false,true,false],[false,false,false,false,false,false,false,false,true,true,false,true,false,false,false,true,false,false,false,false,true,false,false,true,false,false,true,false,false,false,true,false,true,false,false],[false,false,false,true,true,false,false,false,true,true,false,false,false,false,false,true,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,true,false,true,false,false,true,false,false,false,false,false,false,false,false,false,true,false,true,false,false,true,false,false,false,false,false,false,false,false,false,true],[false,true,false,false,true,false,false,false,false,true,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false],[false,false,true,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,true,false,false,true],[false,false,false,false,false,false,false,true,false,false,false,true,false,false,false,true,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false],[false,true,false,false,false,false,false,false,false,false,false,false,false,true,false,false,true,false,false,false,true,true,false,false,false,false,true,false,false,true,false,false,true,false,true],[false,false,false,false,false,false,true,false,false,false,false,false,false,true,true,false,false,false,true,false,false,false,false,false,true,false,true,true,true,false,true,true,false,false,true],[true,false,false,false,true,true,true,false,false,false,false,false,true,false,true,true,false,true,false,false,true,true,false,false,true,false,false,false,false,false,false,false,true,true,true],[false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false],[false,false,false,true,false,true,false,false,false,false,false,true,false,false,false,false,false,false,true,false,false,false,false,true,false,false,false,false,false,true,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,true,false,false,false,true,false,false,false,false,false,false,false,false,false,false,true,true,false,false,false],[true,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,true,false,false,true,false,false],[true,false,true,false,false,false,false,false,false,false,false,false,false,false,true,false,true,false,true,false,false,true,false,false,false,false,false,false,true,false,false,true,true,true,false],[false,true,false,false,false,false,false,true,true,false,false,true,true,true,false,false,true,false,false,true,false,false,false,true,false,true,false,false,false,false,false,true,false,false,false],[false,false,false,false,false,false,true,false,false,true,false,false,false,false,true,false,false,false,false,true,true,false,false,false,false,false,false,false,false,false,false,false,true,false,false],[true,false,true,false,true,false,false,false,true,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,true,false,false,false,false],[false,false,false,false,false,false,true,false,false,true,false,false,false,true,false,false,false,false,false,true,false,true,true,false,false,false,false,false,false,false,true,false,false,false,false]];
+
+    // Création des effets de particules
+    const particles = [];
+    for (let i = 0; i < 100; i++) {
+      const baseR = 5 + Math.random() * 2;
+      const pts = 5 + Math.floor(Math.random() * 6);
+      const shape = Array.from({ length: pts }, (_, j) => {
+        const ang = (j / pts) * 2 * Math.PI;
+        const rad = baseR * (0.5 + Math.random() * 0.5);
+        return [Math.cos(ang) * rad, Math.sin(ang) * rad];
+      });
+      particles.push({
+        x: Math.random() * (gridSize * cellSize),
+        y: Math.random() * (gridSize * cellSize),
+        shape, vy: 0.2 + Math.random() * 0.5, alpha: 0.05 + Math.random() * 0.1
+      });
+    }
+
+    // Fonction de création de la grille
+    function createGrid(fill = () => Math.random() < activeProb) {
+      return Array.from({ length: gridSize }, () =>
+        Array.from({ length: gridSize }, () =>
+          typeof fill === 'function' ? fill() : fill
+        )
+      );
+    }
+
+    // Fonction de dessin de l'arrière-plan
+    function drawBackground() {
+      const img = ctx.createImageData(gridSize * cellSize, gridSize * cellSize);
+      for (let i = 0; i < img.data.length; i += 4) {
+        const v = 30 + Math.random() * 30;
+        img.data[i] = img.data[i + 1] = img.data[i + 2] = v;
+        img.data[i + 3] = 255;
+      }
+      ctx.putImageData(img, 0, 0);
+    }
+
+    // Fonction de dessin des particules
+    function drawParticles() {
+      ctx.save();
+      particles.forEach(p => {
+        p.y -= p.vy;
+        if (p.y + 50 < 0) p.y = gridSize * cellSize + 50;
+        ctx.beginPath();
+        ctx.moveTo(p.x + p.shape[0][0], p.y + p.shape[0][1]);
+        p.shape.slice(1).forEach(pt => ctx.lineTo(p.x + pt[0], p.y + pt[1]));
+        ctx.closePath();
+        ctx.fillStyle = `rgba(255,255,255,${p.alpha})`;
+        ctx.fill();
+      });
+      ctx.restore();
+    }
+
+    // Fonction de dessin des cellules
+    function drawCells() {
+      const wiggle = 1.2;
+      for (let y = 0; y < gridSize; y++) {
+        for (let x = 0; x < gridSize; x++) {
+          if (!grid[y][x]) continue;
+          const age = ageGrid[y][x];
+          const gray = Math.max(0, 255 - age * 10);
+          const cx = x * cellSize + cellSize / 2 + Math.sin((x + frame * 0.05)) * wiggle;
+          const cy = y * cellSize + cellSize / 2 + Math.cos((y + frame * 0.05)) * wiggle;
+          const pts = 18 + Math.floor(Math.random() * 3);
+          const shape = [], halo = [];
+          for (let i = 0; i < pts; i++) {
+            const ang = i * 2 * Math.PI / pts;
+            const r = cellSize / 2 - 1 + Math.random() * 2;
+            const rh = r + 4;
+            shape.push([cx + Math.cos(ang) * r, cy + Math.sin(ang) * r]);
+            halo.push([cx + Math.cos(ang) * rh, cy + Math.sin(ang) * rh]);
+          }
+          ctx.beginPath();
+          ctx.moveTo(halo[0][0], halo[0][1]);
+          halo.slice(1).forEach(p => ctx.lineTo(p[0], p[1]));
+          ctx.closePath();
+          ctx.fillStyle = 'rgba(255,0,0,0.24)';
+          ctx.fill();
+          ctx.beginPath();
+          ctx.moveTo(shape[0][0], shape[0][1]);
+          shape.slice(1).forEach(p => ctx.lineTo(p[0], p[1]));
+          ctx.closePath();
+          ctx.fillStyle = `rgb(${gray},${gray},${gray})`;
+          ctx.fill();
+        }
+      }
+    }
+
+    // Fonction de mise à jour de la logique du jeu
+    function updateLogic() {
+      for (let y = 0; y < gridSize; y++) {
+        for (let x = 0; x < gridSize; x++) {
+          let neighbors = 0;
+          for (let dy = -1; dy <= 1; dy++) {
+            for (let dx = -1; dx <= 1; dx++) {
+              if (dx === 0 && dy === 0) continue;
+              const ny = (y + dy + gridSize) % gridSize;
+              const nx = (x + dx + gridSize) % gridSize;
+              neighbors += grid[ny][nx];
+            }
+          }
+          nextGrid[y][x] = grid[y][x] ? (neighbors === 2 || neighbors === 3) : (neighbors === 3);
+          ageGrid[y][x] = nextGrid[y][x] ? (grid[y][x] ? ageGrid[y][x] + 1 : 1) : 0;
+        }
+      }
+      [grid, nextGrid] = [nextGrid, grid];
+    }
+
+    // Fonction de mise à jour des statistiques
+    function updateStats() {
+      let alive = 0;
+      grid.forEach(row => row.forEach(c => alive += c));
+      const pct = ((alive / (gridSize * gridSize)) * 100).toFixed(1);
+      cellStats.textContent = 'Cellules vivantes: ' + alive + ' | Densité: ' + pct + '%';
+      genInfo.textContent = 'Génération actuelle: ' + generation;
+    }
+
+    // Fonction de dessin d'une image
+    function drawFrame() {
+      frame++;
+      drawBackground();
+      drawParticles();
+      drawCells();
+      updateStats();
+    }
+
+    // Fonction de la boucle principale
+    function loop() {
+      if (!running) return;
+      generation++;
+      updateLogic();
+      drawFrame();
+      setTimeout(loop, fps);
+    }
+
+    // Fonction de réinitialisation de la simulation
+    function resetSimulation() {
+      // Utiliser la grille initiale de la simulation originale
+      grid = initialGrid.map(row => [...row]);
+      nextGrid = createGrid(0);
+      ageGrid = createGrid(0);
+      generation = 0;
+      frame = 0;
+      drawFrame();
+    }
+
+    // Configuration des événements des boutons
+    startStopBtn.onclick = () => {
+      running = !running;
+      startStopBtn.textContent = running ? '⏸️ Arrêter' : '▶️ Démarrer';
+      if (running) {
+        loop();
+      }
+    };
+
+    resetBtn.onclick = () => {
+      running = false;
+      startStopBtn.textContent = '▶️ Démarrer';
+      resetSimulation();
+    };
+
+    // Initialisation de la simulation
+    resetSimulation();
+  </script>
+</body>
+</html>

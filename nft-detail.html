@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Évolution de la Vie Numérique - Détails NFT</title>
+    <meta name="description" content="Découvrez les détails de cette œuvre d'art numérique unique générée par les règles du Jeu de la Vie de Conway.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader">
+        <div class="loader-content">
+            <div class="loader-grid">
+                <div class="loader-cell"></div>
+                <div class="loader-cell"></div>
+                <div class="loader-cell"></div>
+                <div class="loader-cell"></div>
+                <div class="loader-cell"></div>
+                <div class="loader-cell"></div>
+                <div class="loader-cell"></div>
+                <div class="loader-cell"></div>
+                <div class="loader-cell"></div>
+            </div>
+            <div class="loader-text">CHARGEMENT...</div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">Vie<span>Numérique</span></a>
+            <nav>
+                <ul>
+                    <li><a href="index.html#about">À propos</a></li>
+                    <li><a href="index.html#gallery">Galerie</a></li>
+                    <li><a href="index.html#concept">Concept</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- NFT Detail Section -->
+    <section class="nft-detail">
+        <div class="container">
+            <div class="nft-container">
+                <div class="nft-image fade-in">
+                    <video id="nft-video" controls autoplay loop muted>
+                        <source src="animation.mp4" type="video/mp4">
+                        Votre navigateur ne supporte pas la lecture de vidéos.
+                    </video>
+                    <img id="nft-image" src="preview.gif" alt="Aperçu animé de l'œuvre" style="margin-top: 20px; border-radius: 10px;">
+                </div>
+                <div class="nft-info fade-in">
+                    <h2 id="nft-title">Évolution de la Vie Numérique</h2>
+                    <p id="nft-description">Simulation numérique inspirée des règles du Jeu de la Vie de John Conway, montrant l'évolution des motifs cellulaires à travers les générations avec des effets visuels uniques.</p>
+                    
+                    <div class="nft-meta">
+                        <div class="meta-item">
+                            <h4>Artiste</h4>
+                            <p id="nft-author">Manus AI</p>
+                        </div>
+                        <div class="meta-item">
+                            <h4>Date de création</h4>
+                            <p id="nft-created">27/05/2025</p>
+                        </div>
+                        <div class="meta-item">
+                            <h4>Taille de la grille</h4>
+                            <p id="nft-cells">35 x 35</p>
+                        </div>
+                        <div class="meta-item">
+                            <h4>Cellules vivantes</h4>
+                            <p id="nft-alive-cells">28</p>
+                        </div>
+                        <div class="meta-item">
+                            <h4>Densité</h4>
+                            <p id="nft-density">2.3%</p>
+                        </div>
+                        <div class="meta-item">
+                            <h4>Générations</h4>
+                            <p id="nft-generations">1106</p>
+                        </div>
+                        <div class="meta-item">
+                            <h4>Schéma de couleurs</h4>
+                            <p id="nft-color-scheme">Niveaux de gris avec accents rouges</p>
+                        </div>
+                        <div class="meta-item">
+                            <h4>Standard</h4>
+                            <p>ERC-721 (Ethereum)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="purchase-links">
+                        <h3>Acheter cette œuvre</h3>
+                        <p>Cette œuvre d'art numérique unique est disponible à l'achat sur les plateformes NFT suivantes :</p>
+                        <a id="opensea-link" href="https://opensea.io/" target="_blank" class="btn">
+                            <i class="fas fa-shopping-cart"></i> Acheter sur OpenSea
+                        </a>
+                        <a id="rarible-link" href="https://rarible.com/" target="_blank" class="btn btn-outline">
+                            <i class="fas fa-tag"></i> Voir sur Rarible
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-title fade-in" style="margin-top: 4rem;">
+                <h2>Règles du Jeu de la Vie</h2>
+            </div>
+            <div class="about-content fade-in">
+                <div class="about-text">
+                    <p>Cette œuvre est basée sur les règles originales du Jeu de la Vie de John Conway :</p>
+                    <ul style="margin-left: 20px; margin-bottom: 20px;">
+                        <li>Une cellule naît si elle a exactement 3 voisines vivantes.</li>
+                        <li>Une cellule survit si elle a 2 ou 3 voisines vivantes.</li>
+                        <li>Une cellule meurt dans tous les autres cas (solitude ou surpopulation).</li>
+                    </ul>
+                    <p>À partir de ces règles simples, des motifs complexes et fascinants émergent, créant une métaphore visuelle de l'émergence de la complexité dans les systèmes naturels.</p>
+                    <p>Cette œuvre particulière a évolué sur 1106 générations, créant des motifs uniques qui ne se répéteront jamais exactement de la même façon.</p>
+                </div>
+            </div>
+            
+            <div class="section-title fade-in" style="margin-top: 4rem;">
+                <h2>Autres œuvres</h2>
+            </div>
+            <div class="gallery-grid fade-in">
+                <!-- Sera rempli dynamiquement par JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Vie<span>Numérique</span></h3>
+                    <p>Exploration artistique de la complexité émergente à travers le Jeu de la Vie de Conway, transformée en NFT uniques et collectionnables.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Liens rapides</h3>
+                    <ul>
+                        <li><a href="index.html#about">À propos</a></li>
+                        <li><a href="index.html#gallery">Galerie</a></li>
+                        <li><a href="index.html#concept">Concept</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Plateformes NFT</h3>
+                    <ul>
+                        <li><a href="https://opensea.io/" target="_blank">OpenSea</a></li>
+                        <li><a href="https://rarible.com/" target="_blank">Rarible</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 VieNumérique. Tous droits réservés. Créé par Manus AI.
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

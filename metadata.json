@@ -1,0 +1,126 @@
+{
+  "title": "Le Jeu de la Vie de Conway",
+  "description": "Simulation numérique inspirée des règles du Jeu de la Vie de John Conway, montrant l'évolution des motifs cellulaires à travers les générations avec des effets visuels uniques",
+  "author": "Manus AI",
+  "created_at": "2025-05-27T09:22:41.794Z",
+  "version": "1.0.0",
+  "license": "CC BY-NC-SA 4.0",
+  "keywords": [
+    "automate cellulaire",
+    "Jeu de la Vie de Conway",
+    "art génératif",
+    "art numérique",
+    "simulation"
+  ],
+  "artwork": {
+    "title": "Évolution de la Vie Numérique",
+    "medium": "Simulation numérique interactive",
+    "style": "Art génératif",
+    "dimensions": {
+      "width": 210,
+      "height": 210,
+      "unit": "pixels"
+    },
+    "color_scheme": "niveaux de gris avec accents rouges",
+    "inspiration": "Règles du Jeu de la Vie de John Conway (1970)",
+    "concept": "Exploration de la complexité émergente à partir de règles simples, où les motifs cellulaires évoluent dans le temps pour former des structures complexes et changeantes"
+  },
+  "rules": {
+    "birth": [
+      3
+    ],
+    "survival": [
+      2,
+      3
+    ],
+    "neighborhood": "Moore",
+    "boundary": "toroidal",
+    "description": "Une nouvelle cellule naît si elle a exactement 3 voisines vivantes. Une cellule reste en vie si elle a 2 ou 3 voisines vivantes. Une cellule meurt dans tous les autres cas."
+  },
+  "simulation": {
+    "grid_size": 35,
+    "cell_size": 6,
+    "initial_density": 0.2,
+    "speed_ms": 50,
+    "current_generation": 1106,
+    "alive_cells": 28,
+    "density_percentage": 2.3,
+    "initial_pattern": "random",
+    "pattern_history": []
+  },
+  "rendering": {
+    "canvas_scale": 1,
+    "color_scheme": "grayscale",
+    "particle_effects": true,
+    "cell_rendering": {
+      "shape": "organic",
+      "glow_effect": true,
+      "age_based_color": true,
+      "animation": "subtle_wiggle"
+    },
+    "background": {
+      "type": "noise",
+      "color_range": [
+        30,
+        60
+      ],
+      "animation": "static"
+    }
+  },
+  "export": {
+    "video_format": "mp4",
+    "video_quality": "high",
+    "video_fps": 200,
+    "timestamp": "2025-05-27T09:23:50.353Z",
+    "file_size_bytes": 14222001,
+    "frame_count": 0,
+    "resolution": {
+      "width": 210,
+      "height": 210,
+      "scale_factor": 1
+    }
+  },
+  "technical": {
+    "platform": "Web Browser",
+    "language": "JavaScript",
+    "libraries": [
+      "MediaRecorder API",
+      "jszip.min.js"
+    ],
+    "canvas_api": "HTML5 Canvas",
+    "browser_compatibility": [
+      "Chrome",
+      "Firefox",
+      "Safari",
+      "Edge"
+    ],
+    "mobile_support": true
+  },
+  "historical_context": {
+    "original_creation": "1970 par John Horton Conway",
+    "publication": "Numéro d'octobre 1970 de Scientific American dans la colonne 'Mathematical Games' de Martin Gardner",
+    "significance": "L'un des automates cellulaires les plus célèbres de l'histoire de l'informatique, prouvant que des règles simples peuvent produire des comportements complexes et imprévisibles"
+  },
+  "viewer_settings": {
+    "interface_type": "minimal",
+    "controls": [
+      "play_pause",
+      "reset"
+    ],
+    "display_stats": true,
+    "auto_play": false
+  },
+  "nft_metadata": {
+    "schema": "ERC-721",
+    "blockchain": "Ethereum",
+    "collection_name": "Digital Cellular Automata",
+    "rarity": "Unique",
+    "properties": {
+      "generation_algorithm": "Conway's Game of Life",
+      "initial_state_hash": "",
+      "final_state_hash": "",
+      "animation_length_seconds": 55.3,
+      "total_generations": 1106
+    }
+  }
+}
